@@ -11,7 +11,6 @@
 #include <script/solver.h>
 #include <uint256.h>
 #include <util/hash_type.h>
-#include <src/groestlcoin.cpp>
 #include <cassert>
 #include <vector>
 
