@@ -11,7 +11,7 @@
 #include <script/solver.h>
 #include <uint256.h>
 #include <util/hash_type.h>
-
+#include <src/groestlcoin.cpp>
 #include <cassert>
 #include <vector>
 
@@ -54,12 +54,11 @@ bool ExtractDestination(const CScript& scriptPubKey, CTxDestination& addressRet)
     switch (whichType) {
     case TxoutType::PUBKEY: {
         CPubKey pubKey(vSolutions[0]);
-        if (!pubKey.IsValid()) {
-            addressRet = CNoDestination(scriptPubKey);
-        } else {
-            addressRet = PubKeyDestination(pubKey);
-        }
-        return false;
+        if (!pubKey.IsValid())
+            return false;
+
+        addressRet = PKHash(pubKey);
+        return true;
     }
     case TxoutType::PUBKEYHASH: {
         addressRet = PKHash(uint160(vSolutions[0]));
